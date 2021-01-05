@@ -7,7 +7,7 @@ Main file to modelise a blockchain
 '''
 
 class Blockchain:
-    difficulty = 5
+    difficulty = 3
     '''
     Blockchain class constructor
     '''
@@ -22,22 +22,23 @@ class Blockchain:
     '''
     def generateGenesisBlock(self):
         genesisBlock = block.Block(0, "I am the Genesis Block :)", "Asseul", time.time())
-        genesisBlock.hash = genesisBlock.computeHash()
+        genesisBlock.hash = genesisBlock.computeHash(merkle=True)
         self.chain.append(genesisBlock)
 
     '''
     check if a block can be added to the chain and add it
     '''
     def add_block(self, block, proof):
-
         previousHash = self.chain[-1].hash
-
+        
         if previousHash != block.previousHash:
+            print("previous hash error")
             return False
 
         if not self.isValid(block, proof):
-            return Fakse
-
+            print("validity error")
+            return False
+        
         block.hash = proof
         self.chain.append(block)
 
@@ -47,13 +48,13 @@ class Blockchain:
     Find the nonce on of block
     '''
     def proofOfWork(self, block):
-        block.nonce = 0
-
-        computedHash = block.computeHash()
-
+        block.nonce = 0 
+        computedHash = block.computeHash(merkle=True)
+        
         while not computedHash.startswith('0'*Blockchain.difficulty):
             block.nonce += 1
-            computedHash = block.computeHash()
+            computedHash = block.computeHash(merkle=True)
+            
         
         return computedHash
 
@@ -63,7 +64,7 @@ class Blockchain:
     and if we re-compute the hash we obtain the exact same hash
     '''
     def isValid(self, block, blockHash):
-        return (blockHash.startswith('0'*Blockchain.difficulty) and blockHash == block.computeHash())
+        return (blockHash.startswith('0'*Blockchain.difficulty) and blockHash == block.computeHash(merkle=True))
     
     """
     Check if the blockchain is valid or not thanks to the cryptographic function
@@ -75,7 +76,7 @@ class Blockchain:
             previous_hash = self.chain[i].hash
             current_hash = self.chain[i+1].previousHash
             
-            print("previous : "+previous_hash + "  new : "+ current_hash)
+            print("previous : "+previous_hash + "  current : "+ current_hash)
             
             if not previous_hash == current_hash:
                 print("\n=================")
