@@ -69,7 +69,6 @@ class Block:
 
             return hashlib.sha256(blocks[len(blocks)-1].encode()).hexdigest()
         
-        
 if __name__ == "__main__":
     print("Red velvet\n")
     b = Block(1,":)","abcdeer", 1234)

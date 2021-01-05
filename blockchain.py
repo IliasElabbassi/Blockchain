@@ -7,7 +7,7 @@ Main file to modelise a blockchain
 '''
 
 class Blockchain:
-    difficulty = 3
+    difficulty = 5
     '''
     Blockchain class constructor
     '''
@@ -54,8 +54,7 @@ class Blockchain:
         while not computedHash.startswith('0'*Blockchain.difficulty):
             block.nonce += 1
             computedHash = block.computeHash(merkle=True)
-            
-        
+
         return computedHash
 
     '''
@@ -85,13 +84,28 @@ class Blockchain:
                 return False
         
         return True
-        
+    
+    def printChain(self):
+        for block in self.chain:
+            print("\n-------------------------------------------------------------")
+            print("index: "+str(block.index))
+            print("timestamp: "+str(block.timestamp))
+            print("data: "+str(block.data))
+            print("nonce: "+str(block.nonce))
+            print("hash: "+str(block.hash))
+            print("previous hash: "+str(block.previousHash))
+            print("-------------------------------------------------------------\n")
+
 if __name__ == "__main__":
+    ###
+    start = time.time()
+    ###
+    
     print("\nAsseul")
     bc = Blockchain()
     for i in bc.chain:
         print("previous : "+i.previousHash + "  new : "+ i.hash)
-    
+        pass
         
     for x in range(0,10):
         print('\n\n===== new block =====')
@@ -107,10 +121,20 @@ if __name__ == "__main__":
         else:
             print('Error while adding block')
         
-    
     print("\n\n==== Check Chain validity ====")
     valid = bc.checkChain()
     if valid:
         print("Chain valid !")
+        pass
     else:
         print("Chain corupted")
+        pass
+        
+    bc.printChain()
+    
+    ###
+    print((time.time() - start))
+    ###
+    
+        
+    
