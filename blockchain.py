@@ -1,6 +1,7 @@
 import block
 import time
 from uuid import uuid4
+import requests
 
 '''
 Main file to modelise a blockchain
@@ -21,6 +22,10 @@ class Blockchain:
     @property
     def getChain(self):
         return self.chain
+    
+    @property
+    def getNodes(self):
+        return self.nodes
     
     def add_node(self, adresse):
         if adresse not in self.nodes:
@@ -98,6 +103,21 @@ class Blockchain:
         
         return True
     
+    def consensus(self):
+        chain_len = len(self.chain)
+        new_chain = self.chain
+        
+        for node in nodes:
+            node_chain = requests.get("{0}/chain".formar(node))
+            temp = len(node_chain)
+            if temp > chain_len:
+                new_chain = node_chain
+                chain_len = temp
+        
+        self.chain = new_chain
+        
+        return new_chain
+            
     def printChain(self):
         for block in self.chain:
             print("\n-------------------------------------------------------------")
