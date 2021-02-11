@@ -68,6 +68,19 @@ class Block:
                     return self.merkleTreeRecursion(temp)
 
             return hashlib.sha256(blocks[len(blocks)-1].encode()).hexdigest()
+    
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.toJson2(), sort_keys=True)
+    
+    def toJson(self):
+        return {
+            'index' : self.index,
+            'data' : self.data,
+            'previousHash' : self.previousHash,
+            'timestamp' : self.timestamp,
+            'nonce': self.nonce,
+            'hash': self.hash
+        }
         
 if __name__ == "__main__":
     print("Red velvet\n")

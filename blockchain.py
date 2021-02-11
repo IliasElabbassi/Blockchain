@@ -7,16 +7,25 @@ Main file to modelise a blockchain
 '''
 
 class Blockchain:
-    difficulty = 5
+    difficulty = 2
     '''
     Blockchain class constructor
     '''
     def __init__(self):
         self.chain = []
         self.unconfirmedBlocks = []
+        self.nodes = []
 
         self.generateGenesisBlock()
 
+    @property
+    def getChain(self):
+        return self.chain
+    
+    def add_node(self, adresse):
+        if adresse not in self.nodes:
+            self.nodes.append(adresse)
+    
     '''
     Generate and add the genesis block to the chain
     '''
@@ -56,6 +65,10 @@ class Blockchain:
             computedHash = block.computeHash(merkle=True)
 
         return computedHash
+    
+    def new_transaction(self, transaction):
+        self.unconfirmedBlocks.append(transaction)
+        return True
 
     '''
     Check if a hash if valid regarding it's block
