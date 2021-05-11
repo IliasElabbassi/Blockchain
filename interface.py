@@ -4,6 +4,7 @@ import json
 import block
 import time
 import sys
+import utils as ut
 
 app = Flask(__name__)
 
@@ -12,19 +13,26 @@ blockchain = bc.Blockchain()
 
 adresse_to_sync_with = "http://127.0.0.1:50/" # we suppose that this adresse is always on for the moment
 
+@app.route('/register/node/create/adresse')
+def create_adresse():
+    return jsonify(ut.adresse_gen(blockchain.nodes))
+
 @app.route('/register/node', methods=['POST'])
 def register_node():
     required = ["adresse"]
     
     value = request.form
-    
+
     for req in required:
         if req not in value:
             return "Cannot register node, please proceed with an adresse", 400
+
+    if not ut.adress_checkVadility_Avaibality(value["adresse"], blockchain.nodes):
+        return "Can't use {0} this as an adresse".format(value["adresse"]), 400
     
     if value["adresse"] in blockchain.nodes:
         return "Adresse already listed in the nodes", 400
-    
+
     blockchain.add_node(value["adresse"])
     
     response = "{0} added to the node.".format(value["adresse"])
@@ -142,4 +150,3 @@ if __name__ == "__main__":
     args = sys.argv
     port = args[1]
     app.run(debug=True, port=port)
-    

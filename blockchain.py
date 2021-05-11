@@ -8,7 +8,7 @@ Main file to modelise a blockchain
 '''
 
 class Blockchain:
-    difficulty = 2
+    difficulty = 1
     '''
     Blockchain class constructor
     '''
