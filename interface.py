@@ -5,6 +5,7 @@ import block
 import time
 import sys
 import utils as ut
+import requests
 
 app = Flask(__name__)
 
@@ -19,21 +20,25 @@ def create_adresse():
 
 @app.route('/register/node', methods=['POST'])
 def register_node():
-    required = ["adresse"]
+    required = ["adresse", "url"]
     
     value = request.form
 
     for req in required:
         if req not in value:
-            return "Cannot register node, please proceed with an adresse", 400
+            return "Cannot register node, please proceed with an adresse and url", 400
 
     if not ut.adress_checkVadility_Avaibality(value["adresse"], blockchain.nodes):
         return "Can't use {0} this as an adresse".format(value["adresse"]), 400
+
+    for node in blockchain.nodes:
+        if node["url"] == value["url"]:
+            return "Can't use this as an url already used"
     
     if value["adresse"] in blockchain.nodes:
         return "Adresse already listed in the nodes", 400
 
-    blockchain.add_node(value["adresse"])
+    blockchain.add_node(value["adresse"], value["url"])
     
     response = "{0} added to the node.".format(value["adresse"])
     
@@ -86,18 +91,34 @@ def makeTransaction():
     for req in required:
         if not req in values:
             return "Missing arguments", 400
-        
-    transaction = {
-        'sender': values['sender'],
-        'receiver': values['receiver'],
-        'amount': values['amount']
-    }
     
-    blockchain.new_transaction(transaction)
+    if values['sender'] ==  values['receiver']:
+        return "Cannot make transaction with the same sender and receiver", 200
+
+    receiver_exist = False
+    sender_exist = False
+    for node in blockchain.nodes:
+        if not receiver_exist:
+           if values["receiver"] == node["adresse"]:
+               receiver_exist = True
+        if not sender_exist:
+           if values["sender"] == node["adresse"]:
+               sender_exist = True
     
-    response = "Transaction will be added"
-    
-    return jsonify(response), 200
+    if receiver_exist and sender_exist:
+        transaction = {
+            'sender': values['sender'],
+            'receiver': values['receiver'],
+            'amount': values['amount']
+        }
+        blockchain.new_transaction(transaction)
+        response = "Transaction will be added"
+        return jsonify(response), 200
+
+    print(receiver_exist)
+    print(sender_exist)
+
+    return "Cannot make transaction, adresses do not exists"
     
 @app.route('/mine')
 def mine():
@@ -124,9 +145,9 @@ def pending_transaction():
 
 @app.route('/chain/sync')
 def chain_syncing():
-    valid = request.get("{0}/chain/checkValidity".format(adresse_to_sync_with))
+    valid = requests.get("{0}/chain/checkValidity".format(adresse_to_sync_with))
     if valid.status_code:
-        response = request.get("{0}/chain".format(adresse_to_sync_with))
+        response = requests.get("{0}/chain".format(adresse_to_sync_with))
         # we need to reconstruct the chain for now
         return "Chain synced [TODO : reconstruct the chain]", 200
 
@@ -134,7 +155,7 @@ def chain_syncing():
 
 @app.route('/nodes/sync')
 def node_syncing():
-    nodes = request.get("{0}/nodes".format(adresse_to_sync_with))
+    nodes = requests.get("{0}/nodes".format(adresse_to_sync_with))
     
     for val in nodes:
         blockchain.nodes.append(val)

@@ -2,6 +2,7 @@ import block
 import time
 from uuid import uuid4
 import requests
+import json
 
 '''
 Main file to modelise a blockchain
@@ -27,9 +28,14 @@ class Blockchain:
     def getNodes(self):
         return self.nodes
     
-    def add_node(self, adresse):
+    def add_node(self, adresse, url):
         if adresse not in self.nodes:
-            self.nodes.append(adresse)
+            node = {
+                'adresse' : adresse,
+                'url' : url
+            }
+            #self.nodes.append(json.dumps(node))
+            self.nodes.append(node)
     
     '''
     Generate and add the genesis block to the chain
