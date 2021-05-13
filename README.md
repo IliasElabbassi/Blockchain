@@ -16,5 +16,5 @@ Lib used :
 Implementation diagram:
 
 <p align="center">
-  <img src="https://github.com/IliasElabbassi/Blockchain/blob/master/images/diagram_simple.jpg?raw=true" width="250" height="250" />
+  <img src="https://github.com/IliasElabbassi/Blockchain/blob/master/images/diagram_simple.jpg?raw=true" width="500" height="500" />
 </p>
