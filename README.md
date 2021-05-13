@@ -25,7 +25,7 @@
 
 ### Basic execution diagram on run:
 <p align="center">
-  <img src="https://github.com/IliasElabbassi/Blockchain/blob/master/images/run_exection_diagram.jpg?raw=true" height="400" />
+  <img src="https://github.com/IliasElabbassi/Blockchain/blob/master/images/run_exection_diagram.jpg?raw=true" height="250" />
 </p>
 
 ## License
