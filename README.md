@@ -37,7 +37,7 @@ take 3 arguments:
 - amt : the amount to transfer
 
 <p align="center">
-  <img src="https://github.com/IliasElabbassi/Blockchain/blob/master/images/api_call_make_transac.jpg?raw=true" height="250" />
+  <img src="https://github.com/IliasElabbassi/Blockchain/blob/master/images/api_call_make_transac.jpg?raw=true" height="320" />
 </p>
 
 
