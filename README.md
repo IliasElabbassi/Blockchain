@@ -3,7 +3,7 @@ Simple blockchain implementation in python:
 - can hash in simple sha256
 - can hash with a merkle tree hashing using sha256
 
-
+<hr>
 Lib used :
 
 - json
@@ -12,7 +12,7 @@ Lib used :
 - requests
 - Flask
 - uuid
-
+<hr>
 Implementation diagram:
 
 <p align="center">
