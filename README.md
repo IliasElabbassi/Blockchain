@@ -12,3 +12,7 @@ Lib used :
 - requests
 - Flask
 - uuid
+
+Implementation diagram:
+
+![diagram](https://github.com/IliasElabbassi/Blockchain/blob/master/images/diagram_simple.jpg?raw=true)
