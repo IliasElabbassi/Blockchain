@@ -9,3 +9,6 @@ Lib used :
 - json
 - hashlib
 - time
+- requests
+- Flask
+- uuid
