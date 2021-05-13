@@ -4,6 +4,7 @@
 - can hash with a merkle tree hashing using sha256
 
 <hr>
+
 ### Lib used :
 
 - <a href="https://docs.python.org/3/library/json.html">json</a>
