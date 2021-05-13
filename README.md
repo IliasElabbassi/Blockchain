@@ -16,9 +16,9 @@
 
 ### Implementation diagram:
 
-<b>Block</b> : represents the data <br/>
-<b>Blockchain </b>: link the blocks together thanks to cryptographic function <br/>
-<b>Interface</b> : API interface whick interacts with the blockchain ( creating transaction etc ) <br/>
+<b>Block</b> :    represents the data <br/>
+<b>Blockchain </b>:   link the blocks together thanks to cryptographic function <br/>
+<b>Interface</b> :    API interface whick interacts with the blockchain ( creating transaction etc ) <br/>
 <p align="center">
   <img src="https://github.com/IliasElabbassi/Blockchain/blob/master/images/diagram_simple.jpg?raw=true" width="500" height="500" />
 </p>
