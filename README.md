@@ -22,3 +22,6 @@
 <p align="center">
   <img src="https://github.com/IliasElabbassi/Blockchain/blob/master/images/diagram_simple.jpg?raw=true" width="500" height="500" />
 </p>
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
