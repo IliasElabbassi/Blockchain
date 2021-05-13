@@ -4,7 +4,7 @@
 - can hash with a merkle tree hashing using sha256
 
 <hr>
-Lib used :
+### Lib used :
 
 - <a href="https://docs.python.org/3/library/json.html">json</a>
 - <a href="https://docs.python.org/3/library/hashlib.html">hashlib</a>
@@ -13,8 +13,12 @@ Lib used :
 - <a href="https://flask.palletsprojects.com/en/2.0.x/">Flask</a>
 - <a href="https://docs.python.org/3/library/uuid.html">uuid</a>
 <hr>
-Implementation diagram:
 
+### Implementation diagram:
+
+Block: represents the data
+Blockchain: link the blocks together thanks to cryptographic function
+Interface: API interface whick interacts with the blockchain ( creating transaction etc )
 <p align="center">
   <img src="https://github.com/IliasElabbassi/Blockchain/blob/master/images/diagram_simple.jpg?raw=true" width="500" height="500" />
 </p>
