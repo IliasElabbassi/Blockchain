@@ -6,7 +6,7 @@
 <hr>
 Lib used :
 
-- json
+- <a href="https://docs.python.org/3/library/json.html">json</a>
 - hashlib
 - time
 - requests
