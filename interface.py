@@ -115,9 +115,6 @@ def makeTransaction():
         response = "Transaction will be added"
         return jsonify(response), 200
 
-    print(receiver_exist)
-    print(sender_exist)
-
     return "Cannot make transaction, adresses do not exists"
     
 @app.route('/mine')
