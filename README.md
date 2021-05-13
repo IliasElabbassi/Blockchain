@@ -14,7 +14,7 @@
 
 ## Diagrams
 
-### Implementation diagram:
+### <u>Implementation diagram</u>:
 
 <b>Block</b> :    represents the data <br/>
 <b>Blockchain </b>:   link the blocks together thanks to cryptographic function <br/>
@@ -23,7 +23,7 @@
   <img src="https://github.com/IliasElabbassi/Blockchain/blob/master/images/diagram_simple.jpg?raw=true" width="500" height="500" />
 </p>
 
-### Basic execution diagram on run:
+### <u>Basic execution diagram on run</u>:
 <p align="center">
   <img src="https://github.com/IliasElabbassi/Blockchain/blob/master/images/run_exection_diagram.jpg?raw=true" height="250" />
 </p>
