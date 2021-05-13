@@ -14,6 +14,8 @@
 - <a href="https://docs.python.org/3/library/uuid.html">uuid</a>
 <hr>
 
+## Diagrams
+
 ### Implementation diagram:
 
 <b>Block</b> :    represents the data <br/>
