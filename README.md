@@ -28,5 +28,18 @@
   <img src="https://github.com/IliasElabbassi/Blockchain/blob/master/images/run_exection_diagram.jpg?raw=true" height="250" />
 </p>
 
+## API Execution Diagrams
+
+[POST] : /transaction/new <br>
+take 3 arguments:
+- add1 : Adresse of the sender
+- add2 : Adresse of the receiver 
+- amt : the amount to transfer
+
+<p align="center">
+  <img src="https://github.com/IliasElabbassi/Blockchain/blob/master/images/api_call_make_transac.jpg?raw=true" height="250" />
+</p>
+
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
