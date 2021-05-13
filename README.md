@@ -23,5 +23,10 @@
   <img src="https://github.com/IliasElabbassi/Blockchain/blob/master/images/diagram_simple.jpg?raw=true" width="500" height="500" />
 </p>
 
+### Basic execution diagram on run:
+<p align="center">
+  <img src="https://github.com/IliasElabbassi/Blockchain/blob/master/images/run_exection_diagram.jpg?raw=true" height="500" />
+</p>
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
