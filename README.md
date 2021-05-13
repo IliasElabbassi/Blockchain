@@ -7,11 +7,11 @@
 Lib used :
 
 - <a href="https://docs.python.org/3/library/json.html">json</a>
-- hashlib
-- time
-- requests
-- Flask
-- uuid
+- <a href="https://docs.python.org/3/library/hashlib.html">hashlib</a>
+- <a href="https://docs.python.org/3/library/time.html">time</a>
+- <a href="https://docs.python-requests.org/en/master/index.html">requests</a>
+- <a href="https://flask.palletsprojects.com/en/2.0.x/">Flask</a>
+- <a href="https://docs.python.org/3/library/uuid.html">uuid</a>
 <hr>
 Implementation diagram:
 
