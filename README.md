@@ -15,4 +15,6 @@ Lib used :
 
 Implementation diagram:
 
-![diagram](https://github.com/IliasElabbassi/Blockchain/blob/master/images/diagram_simple.jpg?raw=true)
+<p align="center">
+  <img src="https://github.com/IliasElabbassi/Blockchain/blob/master/images/diagram_simple.jpg?raw=true" width="250" height="250" />
+</p>
