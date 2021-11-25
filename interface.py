@@ -164,6 +164,21 @@ def nodes():
     nodes = blockchain.nodes
     return jsonify(nodes)
 
+@app.route('/compute/block/hash')
+def computeExistingBlockHash():
+    b = blockchain.chain[0]
+    hash = blockchain.chain[0].computeHash(merkle=True)
+    return jsonify(b.toJson(), hash)
+
+@app.route('/test/insert/block')
+def testInsertBlock():
+    blockCreated = block.Block(len(blockchain.chain), "Isa", blockchain.chain[-1].hash, time.time())
+    hash = blockchain.proofOfWork(blockCreated)
+    blockCreated.hash = hash
+    #blockchain.add_block(blockchain, hash)
+    
+    return jsonify(blockCreated.toJson(), hash)
+
 if __name__ == "__main__":
     args = sys.argv
     port = args[1]

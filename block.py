@@ -31,13 +31,20 @@ class Block:
             return hashlib.sha256(toHash.encode()).hexdigest()
         else:
             return self.merkleTree()
-            pass
         
     '''
     merkle tree method init
     '''
     def merkleTree(self):
-        data = self.__dict__
+        #data = self.__dict__
+        data = {
+            'index' : self.index,
+            'data' : self.data,
+            'previousHash' : self.previousHash,
+            'timestamp' : self.timestamp,
+            'nonce': self.nonce
+        }
+
         merkleBlocks = []
         
         for ele in data:
@@ -86,4 +93,13 @@ if __name__ == "__main__":
     print("Red velvet\n")
     b = Block(1,":)","abcdeer", 1234)
     
-    a = b.merkleTree()
+    a = b.computeHash(merkle=True)
+    c = b.computeHash()
+    abis = b.computeHash(merkle=True)
+    cbis = b.computeHash()
+
+    print(a)
+    print(abis)
+
+    print(c)
+    print(cbis)

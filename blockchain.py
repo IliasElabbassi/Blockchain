@@ -9,7 +9,7 @@ Main file to modelise a blockchain
 '''
 
 class Blockchain:
-    difficulty = 1
+    difficulty = 3
     '''
     Blockchain class constructor
     '''
@@ -145,10 +145,12 @@ if __name__ == "__main__":
     for i in bc.chain:
         print("previous : "+i.previousHash + "  new : "+ i.hash)
         pass
-        
+    
+    rv_gg = ["Seulgi", "Irene", "Wendy", "Joy", "Yeri", "Isa", "IU", "Arin", "Hyewon", "Minju"]
     for x in range(0,10):
         print('\n\n===== new block =====')
-        blockCreated = block.Block(len(bc.chain), str(uuid4()), bc.chain[-1].hash, time.time())
+        #blockCreated = block.Block(len(bc.chain), str(uuid4()), bc.chain[-1].hash, time.time())
+        blockCreated = block.Block(len(bc.chain), rv_gg[x], bc.chain[-1].hash, time.time())
         print(blockCreated.__dict__)
         blockHash = bc.proofOfWork(blockCreated)
         print('proof of work : '+blockHash)
@@ -159,7 +161,9 @@ if __name__ == "__main__":
                 print("previous : "+i.previousHash + "  new : "+ i.hash)
         else:
             print('Error while adding block')
-        
+                
+    bc.printChain()
+
     print("\n\n==== Check Chain validity ====")
     valid = bc.checkChain()
     if valid:
@@ -168,9 +172,7 @@ if __name__ == "__main__":
     else:
         print("Chain corupted")
         pass
-        
-    bc.printChain()
-    
+
     ###
     print((time.time() - start))
     ###
