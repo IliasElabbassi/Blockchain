@@ -1,4 +1,4 @@
-import block
+import block as block
 import time
 from uuid import uuid4
 import requests
