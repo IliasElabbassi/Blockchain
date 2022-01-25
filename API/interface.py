@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
-import blockchain as bc
+import BC.blockchain as bc
 import json
-import block
+import BC.block as block
 import time
 import sys
 import utils as ut
