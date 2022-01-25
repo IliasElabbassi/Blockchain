@@ -113,7 +113,7 @@ class Blockchain:
         chain_len = len(self.chain)
         new_chain = self.chain
         
-        for node in nodes:
+        for node in self.nodes:
             node_chain = requests.get("{0}/chain".formar(node))
             temp = len(node_chain)
             if temp > chain_len:

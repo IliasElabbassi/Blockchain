@@ -1,3 +1,7 @@
 __pycache__
 env
 docu.txt
+dist
+__pycache__
+build
+TREE_FTP.egg-info
