@@ -1,11 +1,13 @@
 from flask import Flask, jsonify, request
-import BC.blockchain as bc
 import json
-import BC.block as block
 import time
 import sys
-import BC.utils as ut
 import requests
+from colorama import Fore
+
+from BC import utils as ut
+from BC import block as block
+from BC import blockchain as bc
 
 app = Flask(__name__)
 
@@ -13,6 +15,12 @@ app = Flask(__name__)
 blockchain = bc.Blockchain()
 
 adresse_to_sync_with = "http://127.0.0.1:50/" # we suppose that this adresse is always on for the moment
+
+def main():
+    if len(sys.argv) > 1:
+        print(Fore.GREEN+"Launching server :"+Fore.WHITE)
+        port = sys.argv[1]
+        app.run(debug=True, port=port)
 
 @app.route('/register/node/create/adresse')
 def create_adresse():
@@ -180,6 +188,4 @@ def testInsertBlock():
     return jsonify(blockCreated.toJson(), hash)
 
 if __name__ == "__main__":
-    args = sys.argv
-    port = args[1]
-    app.run(debug=True, port=port)
+    main()

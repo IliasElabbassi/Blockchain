@@ -4,11 +4,14 @@ setuptools.setup(
     include_package_data=True,
     name="Rv_bc",
     version="0.0.1",
-    description="FTP Client Server for SR1 TP",
+    description="blockchain framework",
     author="Ilias El Abbassi",
-    author_email="ilias.elabbassi.etu@univ-lille.fr",
+    author_email="iliaselabbassi@outlook.fr",
     packages=setuptools.find_packages(),
     install_requires=[
-        "Flask"
+        "Flask",
+        "requests",
+        "base58",
+        "pycryptodome"
     ]
 )

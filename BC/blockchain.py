@@ -1,4 +1,4 @@
-import block as block
+from BC import block
 import time
 from uuid import uuid4
 import requests
@@ -7,7 +7,6 @@ import json
 '''
 Main file to modelise a blockchain
 '''
-
 class Blockchain:
     difficulty = 3
     '''
@@ -19,6 +18,9 @@ class Blockchain:
         self.nodes = []
 
         self.generateGenesisBlock()
+
+    def length(self):
+        return len(self.chain)
 
     @property
     def getChain(self):

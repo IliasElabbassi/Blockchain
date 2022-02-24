@@ -1,10 +1,11 @@
 def calculate_hash(data, hash_function="sha256"):
     from Crypto.Hash import RIPEMD160, SHA256
+    from Crypto.Hash import RIPEMD160
 
     if type(data) == str:
         data = bytearray(data, "utf-8")
     if hash_function == "sha256":
-        hash = sha256.new()
+        hash = SHA256.new()
         hash.update(data)
         return hash.hexdigest()
     if hash_function == "ripemd160":
