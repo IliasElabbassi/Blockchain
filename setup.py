@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     include_package_data=True,
-    name="TREE_FTP",
+    name="Rv_bc",
     version="0.0.1",
     description="FTP Client Server for SR1 TP",
     author="Ilias El Abbassi",
