@@ -1,4 +1,4 @@
-from utils import calculate_hash
+from wallet.utils import calculate_hash
 from Crypto.PublicKey import RSA
 from colorama import Fore
 import base58
