@@ -1,4 +1,4 @@
-import binascii
+from tkinter.messagebox import NO
 from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA
 from Crypto.Signature import pkcs1_15
@@ -24,6 +24,8 @@ class Block:
         self.previousHash = previousHash
         self.timestamp = timestamp
         self.nonce = 0
+
+        self.signature = None
     
     '''
     Method to compute the block
@@ -48,7 +50,8 @@ class Block:
     '''
     Sign the data by using a private key
     '''
-    def sign(self, owner_pk):
+    def sign(self, owner_pk: bytes):
+        print("in sign --------------")
         datas = self.blockToBytes()
         hash_obj = SHA256.new(datas)
         key = RSA.import_key(owner_pk)
@@ -67,6 +70,7 @@ class Block:
             print("The signature is valid.")
         except (ValueError, TypeError):
             print("The signature is not valid.")
+            raise
 
     '''
     merkle tree method init

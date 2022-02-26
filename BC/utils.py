@@ -1,5 +1,3 @@
-from hashlib import sha256
-
 def adresse_gen(nodes):
     import uuid
     

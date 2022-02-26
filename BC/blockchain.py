@@ -30,14 +30,19 @@ class Blockchain:
     def getNodes(self):
         return self.nodes
     
+    '''
+    add a node into the node list only if there is no node with the exams same property
+    '''
     def add_node(self, adresse, url):
         if adresse not in self.nodes:
             node = {
                 'adresse' : adresse,
                 'url' : url
             }
-            #self.nodes.append(json.dumps(node))
             self.nodes.append(node)
+            return adresse
+        else:
+            return False
     
     '''
     Generate and add the genesis block to the chain
@@ -79,6 +84,10 @@ class Blockchain:
 
         return computedHash
     
+
+    '''
+    append a new transaction to the transaction list
+    '''
     def new_transaction(self, transaction):
         self.unconfirmedBlocks.append(transaction)
         return True
@@ -91,6 +100,7 @@ class Blockchain:
     def isValid(self, block, blockHash):
         return (blockHash.startswith('0'*Blockchain.difficulty) and blockHash == block.computeHash(merkle=True))
     
+
     """
     Check if the blockchain is valid or not thanks to the cryptographic function
     we can check the previous hash of the block with the hash of the previous block
@@ -116,7 +126,7 @@ class Blockchain:
         new_chain = self.chain
         
         for node in self.nodes:
-            node_chain = requests.get("{0}/chain".formar(node))
+            node_chain = requests.get("{0}/chain".format(node.url))
             temp = len(node_chain)
             if temp > chain_len:
                 new_chain = node_chain
@@ -124,6 +134,8 @@ class Blockchain:
         
         self.chain = new_chain
         
+        # TODO: notify all the nodes with the new chain
+
         return new_chain
             
     def printChain(self):
@@ -135,6 +147,7 @@ class Blockchain:
             print("nonce: "+str(block.nonce))
             print("hash: "+str(block.hash))
             print("previous hash: "+str(block.previousHash))
+            print("signature : "+str(block.signature))
             print("-------------------------------------------------------------\n")
 
 if __name__ == "__main__":
@@ -144,10 +157,12 @@ if __name__ == "__main__":
     
     print("\nAsseul")
     bc = Blockchain()
-    public_k =  b'-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqOLbbAoriuMhpNr8XEBg\nGtbOiUxC6oB4FeLNTSc7od8QIk4IjnqIWf8mz/j5IaromWlwCs2QSNYW6oO2B5cs\nWEy0Xikh/vXeOFEPmtTmDkOkCzqP0jS8/racJDORp5Mb0vR03UlsuGoq2w0OYZeZ\nO6b95ivTdRW900Mnh7MpiKorlGG0yzQNdLkElquOdqiGlekRxFB3PzUkc4NcW4Xc\nrPeNVdsdcxI14clOUnjsEwNeneztO1/iYMLHgEVIL7suvtPXXiT60ydP+8o+CTRk\nnBT/GA9xtGGPigUmtOggx+O5ahe9bkYyBxmo6eMfUjS9Ey13EwBbJfgVSNqEBuK0\nFQIDAQAB\n-----END PUBLIC KEY-----'
+
+    public_k = b'-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+3tK3MpgjLvQ6xh4np9\ntD1VgR6FJul1AxbRSMYi+fuWTQHggsN6nyvS1x1mb7F8vL0PsZ38ho3iPl8reRGj\nSztN/DUC6ZJlor4SPdapuJ5KXrupgMn9AqysjVhLqU/iAxyr8PEHSVLOFIyn4V92\nCyQ5zz5mV/qKVfMzC1WVcxt1OzI1p4jjNHtnMzlUdSObiX8z4C1AJr0l/tpms5LX\nb8qUAjohJ2d8g/8s12XU7SIdw4dF8Uf9U+XcsFzHv0d0nnfqcFOgne7pczW1cxkw\nFMCWir0cI+iMCOSLB1UG8jKpax/6HBkHKsHH7JQRZu42iDO5zoLCutmQicyxod5/\n0QIDAQAB\n-----END PUBLIC KEY-----'
     false_pubk = b'-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwlrPu3WhUZEVj67MHWzo\nolGwFlyGo2N0meCEgMUbQ/cdw8mtOgnDNIX986gPUllOLyctasubmFozYKHUDmdq\nI3A3aBU1ihMqb5oJkOHKuac1njAXlr+Xvn0KCAI2sXq5Ca3DEKcAVxo3TGzySg6T\nzk8hyvSvGVzoCvp859+CxHq27Xwjula2ZJXtDvrjujqxqItWhSx2gvuFy0K8S0Qd\n+6fVj0f8+O0c3b5A3aBdxw3x8NTUY+OEkayMUkuNPfBwBhrTaTjUvEJH0AFfKUpl\ndryKWbS6FKDjLxURg0JcNONzXcb0RcojTfJz50fCVw5e2iBj5WSS08ovCoJTZkgR\nzwIDAQAB\n-----END PUBLIC KEY-----'
-    private_k = b'-----BEGIN RSA PRIVATE KEY-----\nMIIEogIBAAKCAQEAqOLbbAoriuMhpNr8XEBgGtbOiUxC6oB4FeLNTSc7od8QIk4I\njnqIWf8mz/j5IaromWlwCs2QSNYW6oO2B5csWEy0Xikh/vXeOFEPmtTmDkOkCzqP\n0jS8/racJDORp5Mb0vR03UlsuGoq2w0OYZeZO6b95ivTdRW900Mnh7MpiKorlGG0\nyzQNdLkElquOdqiGlekRxFB3PzUkc4NcW4XcrPeNVdsdcxI14clOUnjsEwNenezt\nO1/iYMLHgEVIL7suvtPXXiT60ydP+8o+CTRknBT/GA9xtGGPigUmtOggx+O5ahe9\nbkYyBxmo6eMfUjS9Ey13EwBbJfgVSNqEBuK0FQIDAQABAoIBABbR/JM3NpYAReII\nQxRWEIZf4y2TM/GK5W8To+kadYjUYtI32BkkfnsmqoBspIFDnkVohV64Uxg8cYFD\nxdt1tmTCDJcymKjiYSIb9e9WeDWSNz7bLWbagHUsiKGtpC9QBfD13jquerXahqrt\nszVFrktsr58j6eFGzE0ZJGTGNUUFfM8ymNRpyoEF5SIALTTw7l2dkA+p7RsjS1mv\nL6NCLDa/9I8PRueHTPkeijrV+6BuHAwoxltO0bBuMcqIvGdydxpxveCtCejziYU0\nlqxVJ7OGc0fEBpflCKzEj0kw2UEwTsenXYCHmQrkufpcT1vz1D2eNdgliELUszZA\nj9pWzXsCgYEAtrR0xv3H2t40RtOp9lSQvRs3aaxHc/VjtrIVua4iA3gp84P0SjQb\ndgtGWU9NS0KRjzT7KetyUcBRDbasRmACWZi0enXiVKTfYefIHjTgVpqCzpZkfVPa\nEfSdl9UCXnukLKbgbITOMyvDYGlsbTjbF3uUtClxhl3ijq0Pfy/6ohcCgYEA7KM8\nELz4XQCSlX6+fc76C7FrhO87KVSIFoZHvc9DDW6OvqJz9TvOkP5vFjetPay8Up5F\ne1PTWE47SNIRLo5+WV1t2tmTw5/dRceg7+prYgnG1m+BHQ3CorGKTf8ZtZO1XiJV\n6UrNEkiajfd1INcZyD2bD4nnKf5cb/XHDi4IUrMCgYAyjpbt5ZXjG6/NlY6nilkO\n6zQXOsP+831nNbpLSkNBQIQjTXVQ/0BGFvKdjhMuazpKLXf+7pcQxi3npI/hXXno\n/xeZ93rsvz7NIc0/hpQ5gsIFlpoyD/z9EPp25Eumh4IzlO3vOYSxpj+HM0T8qEoA\nIoNQo1M1wk8J+huar1UkewKBgHE3C9bKQl1kl70UfZj9fJ45jUJ1nq2Adven2Q0T\n63WyrnLAkJAExCiUwpszmhwG17cDaCTADz6Rd0W402Wd4Q9qZtOtA0g15QysnPAM\nDMJEATC4+mHnInbqUExOv4MjH0PhU48hLYoQ2HkRqqVCpGAsMVK23LU3sAwU396F\n4Y+HAoGAM0qmnSa3h33kTJaUDFdZf0huTvOaTyImRLSijDajur4TYOHp5ZCEGdDt\nBbsUJJ5rBfM1oDLr6yW8a0yOFt2jGYQd3oifwbkHa2HPM5bJIzZ+obuCx/jJZ3Ap\nOU2mCTxdqUQJzTnpzFSMpCNeU+uKQes9ig2JgtwPAbriLrwf82c=\n-----END RSA PRIVATE KEY-----'
-    
+    private_k = b'-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEAj+3tK3MpgjLvQ6xh4np9tD1VgR6FJul1AxbRSMYi+fuWTQHg\ngsN6nyvS1x1mb7F8vL0PsZ38ho3iPl8reRGjSztN/DUC6ZJlor4SPdapuJ5KXrup\ngMn9AqysjVhLqU/iAxyr8PEHSVLOFIyn4V92CyQ5zz5mV/qKVfMzC1WVcxt1OzI1\np4jjNHtnMzlUdSObiX8z4C1AJr0l/tpms5LXb8qUAjohJ2d8g/8s12XU7SIdw4dF\n8Uf9U+XcsFzHv0d0nnfqcFOgne7pczW1cxkwFMCWir0cI+iMCOSLB1UG8jKpax/6\nHBkHKsHH7JQRZu42iDO5zoLCutmQicyxod5/0QIDAQABAoIBAAf4R9LJHLpN8bvQ\nltcAq2dIoix1MTBXaxhRsiMSfatUCB2ZhgIXqvmXZqRsx1hV/q9A1NakBfC5eJa1\nlGWu2Vj4HrhhgxjF94TMe5wa/+juMvYN9DPie3UjdKabBg2JE93SP58m6Z1gzXKL\n21v6ekHhrqXQMcCbaf+aaPAuvAjUnh/IF1JYvYBb7lxs/LFpJeUaxfMh25/jQ+y3\nxXKs6taDG9ljNEVn3G0vft5B+jJ/uEjqaSclWmfPUuD31D1vEsKQ5ikqczXULblM\nfp25cquKOHoCCPFJjAFPSTej/a+khZ6VeY3e67zxzkRbeH6SH0jXxuhe1q2eVW4Q\nOmADWkECgYEAtvNSvPxutp+Y1ALH57U7++pOUW3TniSg82FitMD6cfnGKNSTuXAw\nimP0277CU3om0aTmQ+sY3LDXyMItfn938dfvLRxzYyZX/fpWIW0nvAhtRYXJUjjE\nvgY0JW5Te62rhogmFoJmD9qQXZncgEkKaP6ZYKozAqD0r0oRi11jOHkCgYEAyWX6\nw5/hrhdb25yPickEGezhzVxsxGFr2pQtZtvIwKSCPdrUNibN2UpxKhp71Bd+T4gK\nmxAYTaG72Mt/jJlgvrEc+CfieI/4TO2/WJxWBQO6GKO1SpDhi1uNcOPESi63KE+a\n/8sLqoBn7hXteNja/sdk5PKGsyjZKpXjU/ZW3BkCgYAT0fCYwNBNwKSR82ss0xmY\nhR3O/JL8gwNc2qQS6QU469JoAf+vC1R26bVRSS1MVeN2uuKnYQTkg9Qcz8yV88FO\n1hH3VSm7CCBoR4KlRGoVmOQdsAzLd5L48zsbAwTQVVRL0twtfBsKhKc3PMACtecG\n0O5U5pt4IW/gvamA67EgIQKBgQCC9s7XkUtXQxdXuvpYNiB1n2XCfjy4g0V4cO0J\nOxjTtOaAxKFEyX0ItPDb2Tb214QqwaNr7E5xhR+7PbGmw0J3HoNhF8accbqcg+nu\n/FKvlhnY1fQZFhek4JccdvB48OHn08ROXEIs0K1E1HuFHzdhgFYqz08qiACYQbn/\nKmyXWQKBgG2W5H4FwEUMJ2y0g5zkLhwVyM+ly9UCfyfpPssfiTAOH/w7E1/togH4\n521KSKckCynTLYkwK0wCGk1CdlLGyWr4DuHv8K7B5IreUkHkxGS2i6KcQR7aG5Vj\nWMZlLai4JDob04kyAYjA1yjmrBMLORslQDSSR9zek127JILxCrjc\n-----END RSA PRIVATE KEY-----'
+    address = b'RVx3k8tLpY4vsSYYvLVXjKp7D8hXLJqgCkxSEgHj67jGdb1giDWfiPzwWd'
+
     for i in bc.chain:
         print("previous : "+i.previousHash + "  new : "+ i.hash)
         pass
@@ -158,6 +173,7 @@ if __name__ == "__main__":
         #blockCreated = block.Block(len(bc.chain), str(uuid4()), bc.chain[-1].hash, time.time())
         blockCreated = block.Block(len(bc.chain), gg, bc.chain[-1].hash, time.time())
         print(blockCreated.__dict__)
+        blockCreated.sign(private_k)
         blockHash = bc.proofOfWork(blockCreated)
         print('proof of work : '+blockHash)
         print("adding block ...")
@@ -174,10 +190,18 @@ if __name__ == "__main__":
     valid = bc.checkChain()
     if valid:
         print("Chain valid !")
-        pass
+        print("\n")
     else:
         print("Chain corupted")
-        pass
+
+    for b in bc.chain[1:-1]:
+        try:
+            b.verify(public_k)
+            print(str(b.index)+" : Verified OK")
+            print()
+        except:
+            print(str(b.index)+" : error in the verification of the signature")
+            print()
 
     ###
     print((time.time() - start))
