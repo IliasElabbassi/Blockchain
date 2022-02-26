@@ -9,6 +9,8 @@ from BC import utils as ut
 from BC import block as block
 from BC import blockchain as bc
 
+from wallet import wallet_adrs
+
 app = Flask(__name__)
 
 # Instantiate the Blockchain
@@ -21,6 +23,21 @@ def main():
         print(Fore.GREEN+"Launching server :"+Fore.WHITE)
         port = sys.argv[1]
         app.run(debug=True, port=port)
+    else:
+        app.run(debug=True)
+
+
+@app.route('/create/wallet')
+def create_wallet():
+    wallet = wallet_adrs.wallet()
+
+    to_return = {
+        "pk" : wallet.get_privateKey().decode(),
+        "pubk" : wallet.get_publicKey().decode(),
+        "adress" : wallet.get_address().decode()
+    }
+
+    return jsonify(to_return)
 
 @app.route('/register/node/create/adresse')
 def create_adresse():
