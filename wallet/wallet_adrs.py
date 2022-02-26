@@ -1,4 +1,4 @@
-from wallet.utils import calculate_hash
+from wallet import utils
 from Crypto.PublicKey import RSA
 from colorama import Fore
 import base58
@@ -21,8 +21,8 @@ class wallet:
     def initialize_keys(self):
         self.private_key = RSA.generate(2048)
         self.public_key = self.private_key.publickey().exportKey()
-        hash_1 = calculate_hash(self.public_key, hash_function="sha256")
-        hash_2 = calculate_hash(hash_1, hash_function="ripemd160")
+        hash_1 = utils.calculate_hash(self.public_key, hash_function="sha256")
+        hash_2 = utils.calculate_hash(hash_1, hash_function="ripemd160")
         self.address = base58.b58encode(hash_2)
         self.address = b"RVx"+self.address
 
@@ -30,7 +30,7 @@ class wallet:
         return self.private_key.exportKey()
 
     def get_publicKey(self):
-        return self.private_key.exportKey()
+        return self.public_key
 
     def get_address(self):
         return self.address

@@ -7,7 +7,6 @@ from BC import blockchain
 from BC import block
 
 class test_bc(unittest.TestCase):
-    
     # use setUp(self) instead of __init__(self)
     def setUp(self):
         self.bc = blockchain.Blockchain()
