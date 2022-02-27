@@ -4,6 +4,8 @@ from Crypto.PublicKey import RSA
 from Crypto.Signature import pkcs1_15
 import json
 
+from BC import utils
+
 '''
 Class that modelise a block
 '''
@@ -19,6 +21,8 @@ class Block:
     signature : block data hashed and signed by a private key
     '''
     def __init__(self, index, data, previousHash, timestamp):
+        utils.init_logging("block.log")
+        
         self.data = data
         self.index = index
         self.previousHash = previousHash

@@ -11,3 +11,12 @@ def adress_checkVadility_Avaibality(add, nodes):
         if add not in nodes:
             return True
     return False
+
+def init_logging(file_name="logger.log"):
+    import logging
+    logger = logging.getLogger('FTP Client Logs')
+    logging.basicConfig(
+        filename=file_name,
+        level=logging.DEBUG,
+        format='%(asctime)s:%(levelname)s:%(message)s'
+    )

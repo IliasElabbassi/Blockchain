@@ -1,8 +1,10 @@
-from BC import block
-import time
 from uuid import uuid4
 import requests
+import time
 import json
+
+from BC import block
+from BC import utils
 
 '''
 Main file to modelise a blockchain
@@ -13,6 +15,8 @@ class Blockchain:
     Blockchain class constructor
     '''
     def __init__(self):
+        utils.init_logging("blockchain.log")
+        
         self.chain = []
         self.unconfirmedBlocks = []
         self.nodes = []
