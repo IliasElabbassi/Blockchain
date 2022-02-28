@@ -14,6 +14,7 @@ setuptools.setup(
         "Flask",
         "requests",
         "base58",
-        "pycryptodome"
+        "pycryptodome",
+        "setuptools"
     ]
 )

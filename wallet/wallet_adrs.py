@@ -3,6 +3,8 @@ from Crypto.PublicKey import RSA
 from colorama import Fore
 import base58
 
+# TODO : make this an external package maybe
+
 class wallet:
     def __init__(self):
         self.private_key = None

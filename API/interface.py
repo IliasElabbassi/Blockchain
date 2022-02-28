@@ -13,6 +13,8 @@ from wallet import wallet_adrs
 
 app = Flask(__name__)
 
+# TODO : create a class out of this file
+
 # Instantiate the Blockchain
 blockchain = bc.Blockchain()
 
