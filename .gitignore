@@ -5,3 +5,4 @@ docu.txt
 dist
 build
 Rv_bc.egg-info
+*.log

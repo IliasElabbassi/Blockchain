@@ -15,6 +15,7 @@ setuptools.setup(
         "requests",
         "base58",
         "pycryptodome",
-        "setuptools"
+        "setuptools",
+        "WalletPy"
     ]
 )
